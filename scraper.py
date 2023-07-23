@@ -11,6 +11,8 @@ import time
 import schedule
 import logging
 
+
+
 logging.basicConfig(filename='/home/furl/vitalscraper/logs/scrape_cronjob.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 loadtime = 10
@@ -23,16 +25,19 @@ csv_file_path = "/home/furl/vitalscraper/vital_numbers.csv"
 
 def scrape_data():
     try:
+        logging.debug("entered try")
         service = Service(executable_path=r"/usr/bin/chromedriver")
         options = ChromeOptions()
         options.add_argument('--headless')
         options.add_argument('--disable-blink-features=AutomationControlled')
+        options.add_argument('--no-sandbox')
         options.page_load_strategy = "none"
-        
+        logging.debug("about to enter with")
         
         with webdriver.Chrome(options=options) as driver:
+            logging.debug("inside of with")
             driver.implicitly_wait(5)
-
+            
             driver.get(url)
             time.sleep(loadtime)
 
