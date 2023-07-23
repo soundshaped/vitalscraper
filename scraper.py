@@ -25,17 +25,17 @@ csv_file_path = "/home/furl/vitalscraper/vital_numbers.csv"
 
 def scrape_data():
     try:
-        logging.debug("entered try")
+        #logging.debug("entered try")
         service = Service(executable_path=r"/usr/bin/chromedriver")
         options = ChromeOptions()
         options.add_argument('--headless')
         options.add_argument('--disable-blink-features=AutomationControlled')
         options.add_argument('--no-sandbox')
         options.page_load_strategy = "none"
-        logging.debug("about to enter with")
+        #logging.debug("about to enter with")
         
         with webdriver.Chrome(options=options) as driver:
-            logging.debug("inside of with")
+            #logging.debug("inside of with")
             driver.implicitly_wait(5)
             
             driver.get(url)
