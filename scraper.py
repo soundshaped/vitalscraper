@@ -4,6 +4,7 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from matplotlib.dates import date2num
 
 import os
 import datetime
@@ -17,7 +18,7 @@ logging.basicConfig(filename='/home/furl/vitalscraper/logs/scrape_cronjob.log', 
 
 loadtime = 10
 
-columns = ["date", "day", "time", "ppl"]
+columns = ["date", "day", "time", "ppl", "datetime"]
 df = pd.DataFrame(columns=columns)
 
 url = "https://www.vitalclimbinggym.com/brooklyn"
@@ -48,8 +49,9 @@ def scrape_data():
             curdate = x.strftime("%Y-%m-%d")
             curtime = x.strftime("%H:%M:%S")
             dayofweek = x.strftime("%A")
+            datetimec = "{} {}".format(curdate, curtime)
 
-            new_row = {"date": curdate, "day": dayofweek, "time": curtime, "ppl": number_of_people}
+            new_row = {"date": curdate, "day": dayofweek, "time": curtime, "ppl": number_of_people, "datetime": datetimec}
             # df = df.append(new_row, ignore_index=True)
 
             # Save data to CSV file after each iteration
@@ -63,6 +65,7 @@ def scrape_data():
                 print("number of people is 'none'")
                 pass
     except Exception as e:
+        logging.debug(number_of_people)
         logging.exception("Exception occured: ")
         raise
         
